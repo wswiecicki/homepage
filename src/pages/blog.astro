@@ -1,7 +1,18 @@
 ---
 import PageBase from '@layouts/PageBase.astro';
-const posts = await Astro.glob('@posts/*');
-const rawHTMLString = 'Hello <strong>World</strong>';
+
+interface PostModule {
+    url: string;
+    frontmatter: {
+        title: string;
+        pubDate: string;
+        author: string;
+    };
+    compiledContent: () => string;
+}
+
+const postImports = import.meta.glob<PostModule>('@posts/*');
+const posts = await Promise.all(Object.values(postImports).map((fn) => fn()));
 ---
 
 <PageBase pageTitle="Blog">

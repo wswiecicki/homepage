@@ -1,32 +1,36 @@
 ---
 import PageBase from '../layouts/PageBase.astro';
+import Summary from './content/about/summary.md';
+import Current from './content/about/current.md';
+import Approach from './content/about/approach.md';
+import Philosophy from './content/about/philosophy.md';
 ---
 
 <PageBase pageTitle="Wojciech Święcicki - homepage">
-    <main>
+    <section>
         <div class="main-content">
             <header>
-                <h1>Welcome.</h1>
+                <h1>About me</h1>
             </header>
             <div class="about-main">
                 <div class="about-text">
-                    <p>
-                        My name is Wojciech Święcicki, I'm a software engineer in test based in Europe. I have built and
-                        tested many types of applications, from well-known webpages to internal tools.
-                    </p>
-                    <p>I'm a proponent of cutting-edge, performant and high quality solutions.</p>
+                    <div class="para-block"><Summary /></div>
+                    <div class="para-block"><Current /></div>
+                    <div class="para-block"><Approach /></div>
+                    <div class="para-block"><Philosophy /></div>
                 </div>
 
                 <address>
+                    <hr />
                     <p>Should you like to contact me, drop me an email:</p>
                     <a href="mailto:wojciech.swiecicki1@gmail.com">Wojciech Święcicki</a>
                 </address>
             </div>
         </div>
-    </main>
+    </section>
 
     <style>
-        main {
+        section {
             max-width: 1280px;
             margin: 0 auto 1rem;
             margin: 0 auto 1rem;
@@ -42,15 +46,19 @@ import PageBase from '../layouts/PageBase.astro';
             height: 70%;
         }
         @media (min-width: 786px) {
-            main {
+            section {
                 padding: 1rem;
             }
+            /* address hr {
+                display: none;
+            } */
         }
 
         .main-content {
         }
+
         h1 {
-            margin: 2rem;
+            text-align: center;
         }
 
         .about-main {
@@ -62,12 +70,15 @@ import PageBase from '../layouts/PageBase.astro';
             flex-wrap: wrap;
         }
 
-        .about-text,
-        address {
-            border-left: 1px solid #b1ada3;
-            max-width: 600px;
+        .about-text {
             margin: unset;
             padding: 0 1rem;
+        }
+
+        address {
+            margin: unset;
+            padding: 1rem;
+            width: 100%;
         }
 
         header {
@@ -76,6 +87,50 @@ import PageBase from '../layouts/PageBase.astro';
 
         a {
             text-decoration: underline;
+        }
+        .about-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 0;
+        }
+
+        .para-block {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            line-height: 1.4;
+        }
+
+        .para-block hr {
+            border: none;
+            border-top: 1px solid #b1ada3;
+            margin: 1rem 0 0 0;
+        }
+
+        @media (min-width: 786px) {
+            .about-text {
+                flex-direction: row;
+            }
+
+            .para-block {
+                flex: 1;
+                padding: 1rem;
+                border-left: 1px solid #b1ada3;
+            }
+
+            .para-block:first-child {
+                border-left: none;
+            }
+
+            .para-block hr {
+                display: none;
+            }
+        }
+        .about-main > hr {
+            border: none;
+            border-top: 1px solid #b1ada3;
+            margin: 1rem 0;
         }
     </style>
 </PageBase>

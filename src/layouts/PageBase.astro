@@ -4,7 +4,7 @@ import '@fontsource/lato';
 import '@fontsource/ubuntu-mono';
 
 import Navigation from '@components/Navigation.astro';
-import { ViewTransitions, slide } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 
 const { pageTitle } = Astro.props || '';
 ---
@@ -14,13 +14,15 @@ const { pageTitle } = Astro.props || '';
         <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{pageTitle ? pageTitle : '//TODO Wojciech Święcicki'}</title>
+        <title>{pageTitle}</title>
     </head>
     <body>
         <canvas></canvas>
         <Navigation />
-        <slot />
-        <ViewTransitions />
+        <main transition:animate="slide">
+            <slot />
+        </main>
+        <ClientRouter />
     </body>
     <script>
         import '@scripts/main.ts';
