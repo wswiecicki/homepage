@@ -1,0 +1,81 @@
+---
+import PageBase from '../layouts/PageBase.astro';
+---
+
+<PageBase pageTitle="Wojciech Święcicki - homepage">
+    <main>
+        <div class="main-content">
+            <header>
+                <h1>Welcome.</h1>
+            </header>
+            <div class="about-main">
+                <div class="about-text">
+                    <p>
+                        My name is Wojciech Święcicki, I'm a software engineer in test based in Europe. I have built and
+                        tested many types of applications, from well-known webpages to internal tools.
+                    </p>
+                    <p>I'm a proponent of cutting-edge, performant and high quality solutions.</p>
+                </div>
+
+                <address>
+                    <p>Should you like to contact me, drop me an email:</p>
+                    <a href="mailto:wojciech.swiecicki1@gmail.com">Wojciech Święcicki</a>
+                </address>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        main {
+            max-width: 1280px;
+            margin: 0 auto 1rem;
+            margin: 0 auto 1rem;
+            border: 1px solid #b1ada350;
+            padding: 0rem;
+            padding-top: auto;
+            border-radius: 0 0 0 16px;
+            border-top: none;
+            backdrop-filter: blur(2px);
+            background-color: rgba(20, 20, 20, 0.6);
+            display: flex;
+            align-items: center;
+            height: 70%;
+        }
+        @media (min-width: 786px) {
+            main {
+                padding: 1rem;
+            }
+        }
+
+        .main-content {
+        }
+        h1 {
+            margin: 2rem;
+        }
+
+        .about-main {
+            min-width: 40%;
+            margin: 2rem 2rem;
+            border-radius: 0;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .about-text,
+        address {
+            border-left: 1px solid #b1ada3;
+            max-width: 600px;
+            margin: unset;
+            padding: 0 1rem;
+        }
+
+        header {
+            text-shadow: 0 0 12px #ada175a0;
+        }
+
+        a {
+            text-decoration: underline;
+        }
+    </style>
+</PageBase>

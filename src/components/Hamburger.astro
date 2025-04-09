@@ -1,0 +1,24 @@
+---
+const { default: innerHTML } = await import(`@assets/hamburger.svg?raw`);
+---
+
+<div class="hamburger">
+    <Fragment set:html={innerHTML} />
+</div>
+
+<style>
+    .hamburger {
+        padding-left: 0.5rem;
+        cursor: pointer;
+        flex-direction: column;
+        display: flex;
+        justify-content: space-between;
+        font-size: 2rem;
+    }
+
+    .hamburger .line {
+        width: 1.5rem;
+        height: 0.15rem;
+        background-color: #b1ada3;
+    }
+</style>

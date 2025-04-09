@@ -1,0 +1,103 @@
+---
+import Hamburger from '@components/Hamburger.astro';
+---
+
+<nav transition:animate="none">
+    <button class="menu-button">Menu</button>
+    <Hamburger />
+    <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/about">About</a></li>
+    </ul>
+</nav>
+
+<script>
+    const menuItems = ['.hamburger', '.menu-button'];
+
+    const setListener = (menuItem: string) => {
+        document.querySelector(menuItem)?.addEventListener('click', () => {
+            document.querySelector('.nav-links')?.classList.toggle('expanded');
+        });
+    };
+    menuItems.forEach((menuItem) => setListener(menuItem));
+
+    document.addEventListener('astro:after-swap', () => menuItems.forEach((menuItem) => setListener(menuItem)));
+</script>
+
+<style>
+    nav {
+        padding: 1rem;
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        border: 1px solid #b1ada3;
+        border-top: 0;
+        border-radius: 0 0 8px 8px;
+        position: relative;
+    }
+
+    nav::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        backdrop-filter: blur(2px);
+    }
+
+    ul {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        list-style-type: none;
+        -webkit-transition:
+            opacity 300ms,
+            visibility 300ms;
+        transition:
+            opacity 300ms,
+            visibility 300ms;
+        margin: 0;
+        padding: 1rem 2rem 1.5rem;
+        top: 100%;
+        right: 0;
+    }
+
+    ul.expanded {
+        visibility: visible;
+        opacity: 1;
+        border: 1px solid #b1ada3;
+        border-radius: 8px;
+        border-top-left-radius: 0;
+        backdrop-filter: blur(1px);
+    }
+
+    nav,
+    ul.expanded {
+        background-color: rgba(20, 20, 20, 0.6);
+        z-index: 1;
+    }
+
+    ul::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        backdrop-filter: blur(1px);
+    }
+
+    li {
+        padding: 0.5rem;
+        padding-right: 0;
+        text-align: right;
+        border-bottom: 1px solid #b1ada3;
+    }
+
+    button:hover,
+    li:hover {
+        text-shadow: 0 0 6px #ada175a0;
+    }
+
+    button {
+        font-size: 1.2rem;
+    }
+</style>

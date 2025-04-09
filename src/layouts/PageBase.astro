@@ -1,0 +1,43 @@
+---
+import '@styles/global.css';
+import '@fontsource/lato';
+import '@fontsource/ubuntu-mono';
+
+import Navigation from '@components/Navigation.astro';
+import { ViewTransitions, slide } from 'astro:transitions';
+
+const { pageTitle } = Astro.props || '';
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{pageTitle ? pageTitle : '//TODO Wojciech Święcicki'}</title>
+    </head>
+    <body>
+        <canvas></canvas>
+        <Navigation />
+        <slot />
+        <ViewTransitions />
+    </body>
+    <script>
+        import '@scripts/main.ts';
+    </script>
+</html>
+
+<style is:global>
+    html {
+        font-family: 'Lato', sans-serif;
+    }
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    summary,
+    address {
+        font-family: 'Ubuntu Mono', monospace;
+    }
+</style>

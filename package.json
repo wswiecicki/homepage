@@ -1,0 +1,22 @@
+{
+  "name": "blog",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@fontsource-variable/cabin": "^5.2.5",
+    "@fontsource/dm-mono": "^5.2.5",
+    "@fontsource/lato": "^5.2.5",
+    "@fontsource/open-sauce-sans": "^5.2.5",
+    "@fontsource/ubuntu-mono": "^5.2.5",
+    "astro": "^5.6.1",
+    "typescript": "^5.8.3"
+  }
+}

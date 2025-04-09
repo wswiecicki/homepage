@@ -1,0 +1,98 @@
+---
+import PageBase from '@layouts/PageBase.astro';
+const posts = await Astro.glob('@posts/*');
+const rawHTMLString = 'Hello <strong>World</strong>';
+---
+
+<PageBase pageTitle="Blog">
+    <section class="post-list">
+        <h1>Blog posts</h1>
+        {
+            posts.map((post) => {
+                return (
+                    <article class="post">
+                        <section class="title">
+                            <a href={post.url}>
+                                <h2 class="post-title">{post.frontmatter.title}</h2>
+                            </a>
+                            <p class="post-date">Published on: {post.frontmatter.pubDate.slice(0, 10)}</p>
+                        </section>
+                        <section class="content">
+                            <p set:html={post.compiledContent()} />
+                        </section>
+                        <section class="post-navigation">
+                            <a href={post.url}>
+                                <p class="read-more">Read more</p>
+                            </a>
+                            <p class="author">~ {post.frontmatter.author}</p>
+                        </section>
+                    </article>
+                );
+            })
+        }
+    </section>
+</PageBase>
+
+<style>
+    .post-list {
+        max-width: 1280px;
+        margin: 0 auto 1rem;
+        border: 1px solid #b1ada350;
+        padding: 1rem;
+        border-radius: 0 0 0 16px;
+        border-top: none;
+        backdrop-filter: blur(2px);
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .post {
+        min-width: 70%;
+        max-width: 95%;
+        margin: 2rem auto;
+        padding: 1rem;
+        border: 1px solid #b1ada3;
+        border-radius: 0 16px 16px 16px;
+        background-color: rgba(20, 20, 20, 0.6);
+    }
+
+    .title {
+        display: flex;
+        align-content: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap-reverse;
+        margin: 0;
+    }
+
+    .post-navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-block-start: 0em;
+        margin-block-end: 0em;
+    }
+
+    .author {
+        text-align: right;
+    }
+
+    .content {
+        max-height: 32rem;
+        overflow: hidden;
+        mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    }
+
+    .post-title {
+        -webkit-transition: 300ms;
+        transition: 300ms;
+    }
+
+    .post-title:hover {
+        text-shadow: 0 0 6px #ada175a0;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+</style>
