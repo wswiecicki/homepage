@@ -1,9 +1,9 @@
 ---
+import { getCollection } from 'astro:content';
 import PageBase from '../layouts/PageBase.astro';
-import Summary from './content/about/summary.md';
-import Current from './content/about/current.md';
-import Approach from './content/about/approach.md';
-import Philosophy from './content/about/philosophy.md';
+import githubIcon from '@assets/github-mark.svg';
+
+const aboutSections = (await getCollection('about')).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 ---
 
 <PageBase pageTitle="Wojciech Święcicki - homepage">
@@ -14,16 +14,40 @@ import Philosophy from './content/about/philosophy.md';
             </header>
             <div class="about-main">
                 <div class="about-text">
-                    <div class="para-block"><Summary /></div>
-                    <div class="para-block"><Current /></div>
-                    <div class="para-block"><Approach /></div>
-                    <div class="para-block"><Philosophy /></div>
+                    {
+                        await Promise.all(
+                            aboutSections.map(async (section) => {
+                                const { Content } = await section.render();
+                                return (
+                                    <div class="para-block">
+                                        <h2>{section.data.title}</h2>
+                                        <Content />
+                                    </div>
+                                );
+                            })
+                        )
+                    }
                 </div>
 
-                <address>
-                    <hr />
-                    <p>Should you like to contact me, drop me an email:</p>
-                    <a href="mailto:wojciech.swiecicki1@gmail.com">Wojciech Święcicki</a>
+                <address class="contact-section">
+                    <hr class="mobile-hr" />
+                    <div class="contact-column email-column">
+                        <p>Should you like to contact me, drop me an email:</p>
+                        <a href="mailto:wojciech.swiecicki1@gmail.com">Wojciech Święcicki</a>
+                    </div>
+                    <hr class="desktop-hr" />
+                    <div class="contact-column github-column">
+                        <p>Or check out my work on GitHub:</p>
+                        <a
+                            href="https://github.com/wswiecicki"
+                            class="button-link github-button"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <img src={githubIcon.src} alt="GitHub Icon" class="button-icon" />
+                            <span>GitHub</span>
+                        </a>
+                    </div>
                 </address>
             </div>
         </div>
@@ -34,13 +58,13 @@ import Philosophy from './content/about/philosophy.md';
             max-width: 1280px;
             margin: 0 auto 1rem;
             margin: 0 auto 1rem;
-            border: 1px solid #b1ada350;
+            border: 1px solid var(--color-border-item-translucent);
             padding: 0rem;
             padding-top: auto;
             border-radius: 0 0 0 16px;
             border-top: none;
             backdrop-filter: blur(2px);
-            background-color: rgba(20, 20, 20, 0.6);
+            background-color: var(--color-bg-post-translucent);
             display: flex;
             align-items: center;
             height: 70%;
@@ -49,9 +73,6 @@ import Philosophy from './content/about/philosophy.md';
             section {
                 padding: 1rem;
             }
-            /* address hr {
-                display: none;
-            } */
         }
 
         .main-content {
@@ -75,14 +96,66 @@ import Philosophy from './content/about/philosophy.md';
             padding: 0 1rem;
         }
 
-        address {
-            margin: unset;
+        .contact-section {
+            margin: 1rem 0;
             padding: 1rem;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .contact-column p {
+            margin-bottom: 0.5rem;
+        }
+
+        .desktop-hr {
+            display: none;
+            border: none;
+            border-left: 1px solid var(--color-border-item);
+            height: auto;
+            margin: 0 1rem;
+        }
+
+        .mobile-hr {
+            display: block;
+            width: 100%;
+            border: none;
+            border-top: 1px solid var(--color-border-item);
+            margin: 1rem 0;
+        }
+
+        @media (min-width: 786px) {
+            .contact-section {
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: flex-start;
+                border-top: 1px solid var(--color-border-item);
+            }
+            .contact-column {
+                flex: 1;
+                align-items: center;
+                text-align: center;
+            }
+            .contact-column p {
+                text-align: center;
+            }
+            .desktop-hr {
+                display: block;
+            }
+            .mobile-hr {
+                display: none;
+            }
         }
 
         header {
-            text-shadow: 0 0 12px #ada175a0;
+            text-shadow: 0 0 12px var(--color-text-shadow-hover);
         }
 
         a {
@@ -102,9 +175,13 @@ import Philosophy from './content/about/philosophy.md';
             line-height: 1.4;
         }
 
+        .para-block h2 {
+            margin-bottom: 0;
+        }
+
         .para-block hr {
             border: none;
-            border-top: 1px solid #b1ada3;
+            border-top: 1px solid var(--color-border-item);
             margin: 1rem 0 0 0;
         }
 
@@ -116,7 +193,7 @@ import Philosophy from './content/about/philosophy.md';
             .para-block {
                 flex: 1;
                 padding: 1rem;
-                border-left: 1px solid #b1ada3;
+                border-left: 1px solid var(--color-border-item);
             }
 
             .para-block:first-child {
@@ -127,10 +204,35 @@ import Philosophy from './content/about/philosophy.md';
                 display: none;
             }
         }
-        .about-main > hr {
-            border: none;
-            border-top: 1px solid #b1ada3;
-            margin: 1rem 0;
+
+        .button-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6em 1.2em;
+            border: 1px solid var(--color-border-item);
+            color: var(--color-text-primary);
+            text-decoration: none;
+            border-radius: 4px;
+            transition:
+                background-color 0.2s ease-in-out,
+                color 0.2s ease-in-out;
+            margin-top: 0.5rem;
+            text-align: center;
+            gap: 0.6em;
+        }
+
+        .button-link:hover {
+            background-color: var(--color-text-primary);
+            color: var(--color-bg-primary);
+            text-decoration: none;
+            border-color: var(--color-text-primary);
+        }
+
+        .button-icon {
+            width: 1.2em;
+            height: 1.2em;
+            fill: currentColor;
         }
     </style>
 </PageBase>

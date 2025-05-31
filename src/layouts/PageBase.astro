@@ -1,7 +1,9 @@
 ---
 import '@styles/global.css';
 import '@fontsource/lato';
+import '@fontsource/lato/700';
 import '@fontsource/ubuntu-mono';
+import '@fontsource/ubuntu-mono/700';
 
 import Navigation from '@components/Navigation.astro';
 import { ClientRouter } from 'astro:transitions';
@@ -23,6 +25,9 @@ const { pageTitle } = Astro.props || '';
             <slot />
         </main>
         <ClientRouter />
+        <footer>
+            <p>© Wojciech Swiecicki 2025</p>
+        </footer>
     </body>
     <script>
         import '@scripts/main.ts';
@@ -41,5 +46,28 @@ const { pageTitle } = Astro.props || '';
     summary,
     address {
         font-family: 'Ubuntu Mono', monospace;
+    }
+
+    main {
+        padding-bottom: 40px;
+    }
+
+    footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: var(--color-bg-primary);
+        color: var(--color-text-primary);
+        text-align: center;
+        padding: 8px 8px;
+        font-size: 0.8em;
+        border-top: 1px solid var(--color-border-item-translucent);
+        z-index: 1;
+    }
+
+    footer p {
+        margin: 0;
+        font-family: 'Lato', sans-serif;
     }
 </style>

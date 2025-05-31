@@ -1,7 +1,18 @@
+:root {
+    --color-bg-primary: rgb(20, 20, 20);
+    --color-text-primary: #b1ada3;
+    --color-border-item: #b1ada3;
+    --color-border-item-translucent: #b1ada350;
+    --color-bg-item-translucent: rgba(255, 255, 255, 0.05);
+    --color-bg-post-translucent: rgba(20, 20, 20, 0.6);
+    --color-accent: #bf4e30;
+    --color-text-shadow-hover: #ada175a0;
+}
+
 html {
-    background-color: rgb(20, 20, 20);
-        -ms-overflow-style: none;
-            scrollbar-width: none;
+    background-color: var(--color-bg-primary);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 html::-webkit-scrollbar {
@@ -10,7 +21,7 @@ html::-webkit-scrollbar {
 
 body {
     margin: 0 auto;
-    color: #b1ada3;
+    color: var(--color-text-primary);
 
 }
 
@@ -38,7 +49,7 @@ canvas {
 }
 
 button, a {
-    color: #b1ada3;
+    color: var(--color-text-primary);
     text-decoration: none;
     background: none;
     border: none;
@@ -50,3 +61,112 @@ button, a {
     transition: 300ms;
 }
 
+details {
+    margin-bottom: 1.5rem;
+    margin-left: 1rem;
+    border: 1px solid var(--color-border-item-translucent);
+    border-radius: 4px;
+    padding: 0.5rem;
+    background-color: var(--color-bg-item-translucent);
+}
+
+details summary {
+    cursor: pointer;
+    padding: 0.5rem;
+    margin: -0.5rem;
+    border-bottom: 1px solid var(--color-border-item);
+    transition: background-color 0.2s ease-in-out;
+    outline: none;
+}
+
+details summary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+details[open] summary {
+    border-bottom: 1px solid var(--color-accent);
+    margin-bottom: 0.5rem;
+}
+
+details > :not(summary) {
+    padding-top: 0.5rem;
+}
+
+article h2 {
+        font-size: 220%;
+        margin: 2.5rem auto 1rem auto;
+}
+
+pre {
+    background-color: #282c34;
+    color: #abb2bf;
+    padding: 1em;
+    border-radius: 8px;
+    overflow-x: auto;
+    position: relative;
+    margin: 1.5rem 0;
+}
+
+code {
+    font-family: "Ubuntu Mono", monospace;
+    font-size: 0.9em;
+}
+
+pre code {
+    display: block;
+    padding: 0;
+    background: none;
+    color: inherit;
+}
+
+:not(pre) > code {
+    background-color: var(--color-bg-item-translucent);
+    color: var(--color-accent);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.85em;
+}
+
+
+.copy-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, background-color 0.3s ease;
+}
+
+pre:hover .copy-button {
+    opacity: 1;
+}
+
+.copy-button:hover {
+    background-color: #a53f25;
+}
+
+.copy-button.copied {
+    background-color: #28a745;
+    color: white;
+}
+
+article h3 {
+        font-size: 200%;
+        margin: 2.5rem auto 1rem auto;
+}
+
+article h4 {
+        font-size: 160%;
+        margin: 2.5rem auto 1rem auto;
+}
+
+article h5 {
+        font-size: 140%;
+        margin: 2.5rem auto 1rem auto;
+}

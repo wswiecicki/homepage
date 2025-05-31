@@ -31,10 +31,10 @@ const background = () => {
     const starSize = 4.0;
     let starGrow = 0.1;
     let slowStarThreshold = maxStars / 2;
-    let baseAlpha = 0.2;
+    let baseAlpha = 0.3;
 
     const slowStarDelay = 8;
-    const idleStars = 16;
+    const idleStars = 24;
     let starsOnMouseMove = 10;
     context.shadowColor = '#e3dcca';
     context.shadowBlur = 20;
@@ -44,7 +44,7 @@ const background = () => {
             stars.shift();
         }
         const angle = Math.random() * Math.PI * 2;
-        let speedMultiplier = excitedMode ? 4 : 1; // much faster in excited mode
+        let speedMultiplier = excitedMode ? 4 : 1;
         const speed = (Math.random() * 0.5 + 0.1) * speedMultiplier;
         stars.push({
             x: x + getRandomWeightedInt(),
@@ -111,7 +111,6 @@ const background = () => {
                 }
 
                 if (excitedMode) {
-                    // Assign a random bright color for explosion effect
                     const r = Math.floor(128 + Math.random() * 127);
                     const g = Math.floor(128 + Math.random() * 127);
                     const b = Math.floor(128 + Math.random() * 127);
@@ -151,10 +150,11 @@ const background = () => {
     document.addEventListener('mousemove', throttle(onMouseMove, 10));
 
     const emailLink = document.querySelector('a[href^="mailto:"]');
-    if (emailLink) {
+    const githubLink = document.querySelector('a[href^="https://github.com"]');
+    if (emailLink && githubLink) {
         let excitedTimeout: ReturnType<typeof setTimeout> | null = null;
 
-        emailLink.addEventListener('mouseenter', () => {
+        const excite = () => {
             excitedMode = true;
             maxStars = 512;
             starsOnMouseMove = 40;
@@ -171,6 +171,31 @@ const background = () => {
                 slowStarThreshold = maxStars / 2;
                 baseAlpha = 0.2;
             }, 1000);
+        };
+
+        const unexcite = () => {
+            excitedMode = false;
+            maxStars = 256;
+            starsOnMouseMove = 10;
+            starGrow = 0.1;
+            slowStarThreshold = maxStars / 2;
+            baseAlpha = 0.2;
+        };
+
+        emailLink.addEventListener('mouseenter', () => {
+            excite();
+        });
+
+        githubLink.addEventListener('mouseenter', () => {
+            excite();
+        });
+
+        emailLink.addEventListener('mouseleave', () => {
+            unexcite();
+        });
+
+        githubLink.addEventListener('mouseleave', () => {
+            unexcite();
         });
     }
 
