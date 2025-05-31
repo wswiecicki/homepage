@@ -17,7 +17,7 @@
     "@fontsource/open-sauce-sans": "^5.2.5",
     "@fontsource/ubuntu-mono": "^5.2.5",
     "@glidejs/glide": "^3.7.1",
-    "astro": "^5.6.1",
+    "astro": "^5.8.1",
     "typescript": "^5.8.3"
   }
 }
