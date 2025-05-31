@@ -1,0 +1,206 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+---
+
+<div class="masonry-layout" aria-label="Projects showcase">
+    {
+        await Promise.all(
+            projects.map(async (project) => {
+                const { Content } = await project.render();
+                const headerId = `project-header-${project.slug}`;
+                return (
+                    <article class="project-item" aria-labelledby={headerId} data-project-item>
+                        <figure>
+                            {project.data.logoSrc && (
+                                <img src={project.data.logoSrc} alt={project.data.logoAlt || ''} class="project-logo" />
+                            )}
+                            <figcaption>
+                                <h3 id={headerId}>{project.data.title}</h3>
+                                <div class="project-description is-collapsed" data-project-description>
+                                    <Content />
+                                </div>
+                                <div class="expand-prompt" data-expand-prompt>
+                                    <p data-prompt-text>More...</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </article>
+                );
+            })
+        )
+    }
+</div>
+
+<style>
+    .masonry-layout {
+        --columns: 2;
+        --gap: 1.5rem;
+        column-count: var(--columns);
+        column-gap: var(--gap);
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .project-item {
+        background: var(--color-bg-item-translucent);
+        border: 1px solid var(--color-border-item-translucent);
+        border-radius: 12px;
+        padding: 1.5rem 1.5rem 1rem;
+        margin-bottom: var(--gap);
+        break-inside: avoid-column;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease;
+        backdrop-filter: blur(4px);
+    }
+
+    .project-item:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        border-color: var(--color-border-item);
+    }
+
+    .project-item.is-expandable {
+        cursor: pointer;
+    }
+
+    .project-item figure {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .project-item figcaption {
+        width: 100%;
+    }
+
+    .project-logo {
+        max-width: 160px;
+        height: auto;
+        margin-bottom: 1rem;
+    }
+
+    .project-item h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: var(--color-accent);
+        text-align: center;
+    }
+
+    .project-description {
+        color: var(--color-text-primary);
+        line-height: 1.5;
+        text-align: left;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        transition: max-height 0.3s ease-out;
+    }
+
+    .project-description.is-collapsed {
+        max-height: 5em;
+        mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    }
+
+    .project-description p {
+        margin-bottom: 0.5em;
+    }
+
+    .project-description p:last-child {
+        margin-bottom: 0;
+    }
+
+    .expand-prompt {
+        display: none;
+        text-align: center;
+        font-size: 0.8em;
+        color: var(--color-text-primary);
+        opacity: 0.7;
+        margin-top: 1rem;
+        transition: all 0.1s ease;
+    }
+
+    .project-item.is-expandable .expand-prompt {
+        display: block;
+    }
+
+    @media (max-width: 768px) {
+        .masonry-layout {
+            --columns: 1;
+        }
+
+        .project-item {
+            padding: 1rem;
+        }
+
+        .project-logo {
+            max-width: 80px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        function expand(item: HTMLElement) {
+            const description = item.querySelector('[data-project-description]') as HTMLElement;
+            const promptText = item.querySelector('[data-prompt-text]');
+            description.style.maxHeight = `${description.scrollHeight}px`;
+            description.classList.remove('is-collapsed');
+
+            if (promptText) {
+                promptText.textContent = 'Less...';
+            }
+        }
+
+        function collapse(item: HTMLElement) {
+            const description = item.querySelector('[data-project-description]') as HTMLElement;
+            const promptText = item.querySelector('[data-prompt-text]');
+
+            description.style.maxHeight = `${description.scrollHeight}px`;
+
+            description.style.maxHeight = '5em';
+            description.classList.add('is-collapsed');
+
+            if (promptText) {
+                promptText.textContent = 'More...';
+            }
+        }
+
+        const projectItems = document.querySelectorAll('[data-project-item]');
+
+        projectItems.forEach((item) => {
+            const projectItem = item as HTMLElement;
+            const description = projectItem.querySelector('[data-project-description]') as HTMLElement;
+            if (!description) return;
+
+            const isOverflowing = description.scrollHeight > description.clientHeight;
+            if (!isOverflowing) {
+                description.classList.remove('is-collapsed');
+                return;
+            }
+            projectItem.classList.add('is-expandable');
+            projectItem.setAttribute('title', 'Hover or tap to see more content');
+
+            if (!isTouchDevice) {
+                projectItem.addEventListener('mouseover', () => {
+                    expand(projectItem);
+                });
+                projectItem.addEventListener('mouseout', () => {
+                    collapse(projectItem);
+                });
+            }
+            projectItem.addEventListener('touchend', () => {
+                if (description.classList.contains('is-collapsed')) {
+                    expand(projectItem);
+                } else collapse(projectItem);
+            });
+        });
+    });
+</script>

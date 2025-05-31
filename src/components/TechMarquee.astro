@@ -1,0 +1,113 @@
+---
+interface Props {
+    technologies: { name: string; logo: string }[];
+}
+
+const { technologies } = Astro.props;
+
+const marqueeItems = technologies ? [...technologies, ...technologies] : [];
+---
+
+<div class="marquee-container">
+    <div class="marquee-content">
+        {
+            marqueeItems.map((tech) => (
+                <div class="marquee-item">
+                    <img src={tech.logo} alt={`${tech.name} logo`} width="150" height="150" />
+                    <span>{tech.name}</span>
+                </div>
+            ))
+        }
+    </div>
+</div>
+
+<style>
+    .marquee-container {
+        width: calc(100% - 2rem);
+
+        margin: 2rem auto;
+        overflow: hidden;
+        position: relative;
+        background: var(--color-bg-item-translucent);
+        border: 1px solid var(--color-border-item-translucent);
+        border-radius: 12px;
+        box-sizing: border-box;
+        padding: 1rem;
+    }
+
+    .marquee-container::before,
+    .marquee-container::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 50px;
+        z-index: 2;
+    }
+
+    .marquee-container::before {
+        left: 0;
+        background: linear-gradient(to right, var(--color-bg-item-translucent), transparent);
+    }
+
+    .marquee-container::after {
+        right: 0;
+        background: linear-gradient(to left, var(--color-bg-item-translucent), transparent);
+    }
+
+    .marquee-content {
+        display: flex;
+        width: fit-content;
+        animation: marquee 30s linear infinite;
+        will-change: transform;
+    }
+
+    .marquee-container:hover .marquee-content {
+        animation-play-state: paused;
+    }
+
+    .marquee-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 1.5rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+        min-height: 100px;
+        text-align: center;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .marquee-item:hover {
+        border: 1px solid var(--color-border-item-translucent);
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .marquee-item img {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+        object-fit: contain;
+        transition: filter 0.3s ease;
+    }
+
+    .marquee-item span {
+        font-size: 0.9rem;
+        color: var(--text-color-secondary, #cccccc);
+    }
+
+    .marquee-item:hover img {
+        filter: grayscale(0%) opacity(100%);
+    }
+
+    @keyframes marquee {
+        0% {
+            transform: translateX(0%);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+</style>

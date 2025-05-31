@@ -1,0 +1,224 @@
+---
+
+---
+
+<div class="json-formatter">
+    <h2>JSON Formatter</h2>
+    <p class="tool-description">Format and validate your JSON data right in your browser.</p>
+
+    <div class="input-output-container">
+        <div class="input-container">
+            <h3>Input</h3>
+            <textarea class="json-input" placeholder="Paste your JSON here..."></textarea>
+        </div>
+        <div class="output-container">
+            <h3>Formatted Output</h3>
+            <pre class="json-output"></pre>
+        </div>
+    </div>
+    <div class="controls">
+        <button class="format-button">Format JSON</button>
+        <button class="copy-button">Copy to Clipboard</button>
+        <div class="options">
+            <label>
+                <input type="number" class="indent-size" min="1" max="8" value="2" />
+                Indent Size
+            </label>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const jsonInput = document.getElementsByClassName('json-input')[0] as HTMLTextAreaElement;
+        const jsonOutput = document.getElementsByClassName('json-output')[0] as HTMLPreElement;
+        const formatButton = document.getElementsByClassName('format-button')[0] as HTMLButtonElement;
+        const copyButton = document.getElementsByClassName('copy-button')[0] as HTMLButtonElement;
+        const indentSize = document.getElementsByClassName('indent-size')[0] as HTMLInputElement;
+
+        formatButton.addEventListener('click', () => {
+            try {
+                const inputValue = jsonInput.value.trim();
+                if (!inputValue) {
+                    jsonOutput.textContent = '';
+                    return;
+                }
+                const parsedJson = JSON.parse(inputValue);
+                const formattedJson = JSON.stringify(parsedJson, null, parseInt(indentSize.value));
+                jsonOutput.textContent = formattedJson;
+                jsonOutput.classList.remove('error');
+            } catch (error: unknown) {
+                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                jsonOutput.textContent = `Error: ${errorMessage}`;
+                jsonOutput.classList.add('error');
+            }
+        });
+
+        copyButton.addEventListener('click', () => {
+            if (jsonOutput.textContent) {
+                navigator.clipboard
+                    .writeText(jsonOutput.textContent)
+                    .then(() => {
+                        const originalText = copyButton.textContent || 'Copy to Clipboard';
+                        copyButton.textContent = 'Copied!';
+                        setTimeout(() => {
+                            copyButton.textContent = originalText;
+                        }, 2000);
+                    })
+                    .catch((err) => {
+                        console.error('Failed to copy: ', err);
+                    });
+            }
+        });
+    });
+</script>
+
+<style>
+    .json-formatter {
+        background-color: var(--color-bg-post-translucent);
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        margin-bottom: 2rem;
+    }
+
+    .json-formatter h2 {
+        margin-top: 0;
+        color: var(--color-text-primary);
+        font-size: 1.5rem;
+        border-bottom: 1px solid var(--color-border-item-translucent);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .input-container h3,
+    .output-container h3 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+        color: var(--color-text-primary);
+    }
+
+    .tool-description {
+        color: var(--color-text-primary);
+        margin-bottom: 1.5rem;
+    }
+
+    .input-output-container {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        justify-content: space-between;
+        align-content: stretch;
+    }
+
+    .input-container,
+    .output-container {
+        flex-grow: 1;
+        max-width: 50%;
+        max-height: 500px;
+    }
+
+    @media (max-width: 768px) {
+        .input-output-container {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .input-container,
+        .output-container {
+            max-height: 500px;
+            max-width: 100%;
+        }
+    }
+
+    .json-input,
+    .json-output {
+        width: 100%;
+        flex: 1;
+        min-height: 350px;
+        max-height: 350px;
+        background-color: var(--color-bg-primary);
+        border: 1px solid var(--color-border-item-translucent);
+        border-radius: 4px;
+        padding: 0.5rem;
+        color: var(--color-text-primary);
+        font-family: monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        margin: unset;
+    }
+
+    .json-output {
+        white-space: pre;
+        text-align: left;
+        overflow: auto;
+        flex-grow: 0;
+        padding: 0.5rem;
+        box-sizing: border-box;
+    }
+
+    .json-output.error {
+        color: #ff6b6b;
+        border-color: rgba(255, 107, 107, 0.5);
+    }
+
+    .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1rem;
+        align-items: center;
+    }
+
+    button {
+        background-color: var(--color-accent);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        font-weight: 500;
+    }
+
+    button:hover {
+        background-color: #d45636;
+        transform: translateY(-1px);
+    }
+
+    .options {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+    }
+
+    .options label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--color-text-primary);
+        font-size: 0.9rem;
+    }
+
+    .indent-size {
+        width: 3rem;
+        background-color: var(--color-bg-primary);
+        border: 1px solid var(--color-border-item-translucent);
+        border-radius: 4px;
+        padding: 0.25rem;
+        color: var(--color-text-primary);
+        text-align: center;
+    }
+
+    input[type='number']::-webkit-outer-spin-button,
+    input[type='number']::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type='number'] {
+        -moz-appearance: textfield;
+    }
+</style>

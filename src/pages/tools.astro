@@ -1,0 +1,125 @@
+---
+import PageBase from '@layouts/PageBase.astro';
+---
+
+<PageBase pageTitle="Tools">
+    <section class="tools-section">
+        <h1>My Tools</h1>
+        <p class="tools-intro">
+            A collection of useful web-based tools I've created to help with common development tasks.
+        </p>
+
+        <div class="tools-container">
+            <div class="tool-card">
+                <div class="tool-header">
+                    <h2>JSON Formatter</h2>
+                    <a href="/tools/json-formatter" class="tool-link">Open</a>
+                </div>
+                <p class="tool-description">Format and validate your JSON data right in your browser.</p>
+                <p class="tool-features">
+                    <span class="feature">Private: client-side only</span>
+                    <span class="feature">Pretty printing</span>
+                    <span class="feature">Syntax validation</span>
+                </p>
+            </div>
+        </div>
+    </section>
+</PageBase>
+
+<style>
+    .tools-section {
+        max-width: 1280px;
+        margin: 0 auto 1rem;
+        border: 1px solid #b1ada350;
+        padding: 1rem;
+        border-radius: 0 0 0 16px;
+        border-top: none;
+        backdrop-filter: blur(4px);
+        background-color: var(--color-bg-post-translucent);
+        text-align: center;
+    }
+
+    .tools-intro {
+        max-width: 800px;
+        margin: 0 auto 2rem;
+        font-size: 1.1rem;
+        line-height: 1.5;
+        color: #b1ada3;
+    }
+
+    .tools-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 2rem;
+        margin-top: 2rem;
+        margin-bottom: 4rem;
+    }
+
+    .tool-card {
+        background-color: var(--color-bg-item-translucent);
+        border-radius: 8px;
+        padding: 1.5rem;
+        padding-bottom: 0.5rem;
+        text-align: left;
+        width: 48%;
+    }
+
+    @media (max-width: 768px) {
+        .tool-card {
+            width: 96%;
+        }
+    }
+
+    .tool-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--color-border-item-translucent);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .tool-card h2 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    .tool-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        justify-content: space-evenly;
+    }
+
+    .feature {
+        background-color: var(--color-bg-primary);
+        color: #b1ada3;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+    }
+
+    .tool-link {
+        display: inline-block;
+        background-color: var(--color-bg-primary);
+        border: 1px solid var(--color-border-item-translucent);
+        color: var(--color-border-item);
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: background-color 0.2s;
+    }
+
+    .tool-link:hover {
+        background-color: var(--color-bg-item-translucent);
+    }
+
+    @media (min-width: 768px) {
+        .input-output-container {
+            flex-direction: row;
+        }
+    }
+</style>

@@ -1,0 +1,103 @@
+---
+import PageBase from '@layouts/PageBase.astro';
+import TechCarousel from '@components/TechCarousel.astro';
+
+const technologies = {
+    languages: [
+        { name: 'TypeScript', logo: '/logos/ts.svg' },
+        { name: 'JavaScript', logo: '/logos/js.svg' },
+        { name: 'Python', logo: '/logos/py.svg' },
+        { name: 'Java', logo: '/logos/java.svg' },
+        { name: 'C#', logo: '/logos/csharp.svg' },
+    ],
+    tools: [
+        { name: 'Node.js', logo: '/logos/node.svg' },
+        { name: 'AEM', logo: '/logos/aem.svg' },
+        { name: 'Webpack', logo: '/logos/webpack.svg' },
+        { name: 'Wordpress', logo: '/logos/wordpress.svg' },
+        { name: 'SQL', logo: '/logos/sql.svg' },
+        { name: 'NoSQL', logo: '/logos/nosql.svg' },
+        { name: 'Next', logo: '/logos/next.svg' },
+        { name: 'React', logo: '/logos/react.svg' },
+        { name: 'Electron', logo: '/logos/electron.svg' },
+    ],
+    devops: [
+        { name: 'Github Actions', logo: '/logos/ghactions.svg' },
+        { name: 'Jenkins', logo: '/logos/jenkins.svg' },
+        { name: 'Docker', logo: '/logos/docker.svg' },
+        { name: 'Kubernetes', logo: '/logos/k8s.svg' },
+        { name: 'Azure', logo: '/logos/azure.svg' },
+        { name: 'GCP', logo: '/logos/gcp.svg' },
+        { name: 'Terraform', logo: '/logos/terraform.svg' },
+    ],
+    qa: [
+        { name: 'Playwright', logo: '/logos/pw.svg' },
+        { name: 'Cypress', logo: '/logos/cypress.svg' },
+        { name: 'Selenium', logo: '/logos/selenium.svg' },
+        { name: 'Rest Assured', logo: '/logos/restassured.png' },
+        { name: 'k6', logo: '/logos/k6.svg' },
+        { name: 'Percy', logo: '/logos/percy.svg' },
+        { name: 'Postman', logo: '/logos/postman.svg' },
+        { name: 'Browserstack', logo: '/logos/browserstack.svg' },
+        { name: 'HP ALM', logo: '/logos/alm.svg' },
+        { name: 'Jira Xray', logo: '/logos/xray.svg' },
+    ],
+    observability: [
+        { name: 'Grafana', logo: '/logos/grafana.svg' },
+        { name: 'Prometheus', logo: '/logos/prometheus.svg' },
+        { name: 'App Insights', logo: '/logos/app-insights.svg' },
+        { name: 'Apache Superset', logo: '/logos/superset.svg' },
+        { name: 'Sentry', logo: '/logos/sentry.svg' },
+    ],
+};
+---
+
+<PageBase pageTitle="Technologies">
+    <section class="tech-section">
+        <h1>Technologies I worked with</h1>
+
+        <div>
+            <h2>Languages</h2>
+            <TechCarousel technologies={technologies.languages} />
+            <h2>Tools and frameworks</h2>
+            <TechCarousel technologies={technologies.tools} />
+            <h2>DevOps</h2>
+            <TechCarousel technologies={technologies.devops} />
+            <h2>QA</h2>
+            <TechCarousel technologies={technologies.qa} />
+            <h2>Observability</h2>
+            <TechCarousel technologies={technologies.observability} />
+        </div>
+    </section>
+</PageBase>
+
+<style>
+    .tech-section {
+        max-width: 1280px;
+        margin: 0 auto 1rem;
+        border: 1px solid #b1ada350;
+        padding: 1rem;
+        border-radius: 0 0 0 16px;
+        border-top: none;
+        backdrop-filter: blur(2px);
+        background-color: var(--color-bg-post-translucent);
+        text-align: center;
+    }
+
+    .tech-section h1 {
+        margin-bottom: 4rem;
+    }
+
+    .tech-section p {
+        margin-bottom: 2rem;
+    }
+</style>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        document.querySelectorAll('.glide').forEach((carousel) => {
+            (carousel as HTMLElement).offsetHeight;
+            window.dispatchEvent(new Event('resize'));
+        });
+    });
+</script>
