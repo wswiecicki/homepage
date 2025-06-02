@@ -22,3 +22,20 @@ import PageBase from '../layouts/PageBase.astro';
         padding: 1rem 0;
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks) {
+            navLinks.classList.add('expanded');
+        }
+        const hamburger = document.querySelector('.hamburger');
+        const menuButton = document.querySelector('.menu-button');
+        if (hamburger) {
+            hamburger.classList.add('attention-pulse');
+        }
+        if (menuButton) {
+            menuButton.classList.add('attention-pulse');
+        }
+    });
+</script>
