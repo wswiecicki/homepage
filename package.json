@@ -10,13 +10,14 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@fontsource-variable/cabin": "^5.2.5",
-    "@fontsource/dm-mono": "^5.2.5",
-    "@fontsource/lato": "^5.2.5",
+    "@astrojs/check": "^0.9.9",
+    "@fontsource-variable/cabin": "^5.2.8",
+    "@fontsource/dm-mono": "^5.2.7",
+    "@fontsource/lato": "^5.2.7",
     "@fontsource/open-sauce-sans": "^5.2.5",
-    "@fontsource/ubuntu-mono": "^5.2.5",
-    "astro": "^5.8.1",
-    "typescript": "^5.8.3"
+    "@fontsource/ubuntu-mono": "^5.2.8",
+    "astro": "^6.2.1",
+    "typescript": "^6.0.3",
+    "zod": "^4.4.1"
   }
 }

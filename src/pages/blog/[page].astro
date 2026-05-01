@@ -1,5 +1,5 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import type { GetStaticPathsOptions, Page } from 'astro';
 import PageBase from '@layouts/PageBase.astro';
 
@@ -20,8 +20,8 @@ const { page }: { page: Page<CollectionEntry<'blog'>> } = Astro.props;
         {
             await Promise.all(
                 page.data.map(async (post) => {
-                    const { Content } = await post.render();
-                    const postUrl = `/blog/${post.slug}/`;
+                    const { Content } = await render(post);
+                    const postUrl = `/blog/${post.id}/`;
                     return (
                         <article class="post">
                             <section class="title">

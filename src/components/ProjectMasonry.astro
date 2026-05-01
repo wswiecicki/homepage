@@ -1,5 +1,5 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import { render, type CollectionEntry } from 'astro:content';
 
 interface Props {
     projects: CollectionEntry<'projects'>[];
@@ -19,8 +19,8 @@ projects.forEach((project, index) => {
                 <div class="masonry-column">
                     {await Promise.all(
                         column.map(async ({ project, index }) => {
-                            const { Content } = await project.render();
-                            const headerId = `project-header-${project.slug}`;
+                            const { Content } = await render(project);
+                            const headerId = `project-header-${project.id}`;
                             return (
                                 <article
                                     class="project-item"

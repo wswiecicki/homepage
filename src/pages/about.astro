@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import PageBase from '../layouts/PageBase.astro';
 import githubIcon from '@assets/github-mark.svg';
 
@@ -17,7 +17,7 @@ const aboutSections = (await getCollection('about')).sort((a, b) => (a.data.orde
                     {
                         await Promise.all(
                             aboutSections.map(async (section) => {
-                                const { Content } = await section.render();
+                                const { Content } = await render(section);
                                 return (
                                     <div class="para-block">
                                         <h2>{section.data.title}</h2>
