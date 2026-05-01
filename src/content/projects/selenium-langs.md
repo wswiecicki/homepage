@@ -1,7 +1,11 @@
 ---
 title: 'Selenium-based frameworks'
-logoSrc: '/logos/projects/tb.png'
-logoAlt: 'selenium in dotnet, python and java'
+order: 11
+logos:
+    - src: '/logos/selenium.svg'
+      alt: 'Selenium'
+    - src: '/logos/java.svg'
+      alt: 'Java'
 ---
 
 A Selenium-based framework with integrations with a plethora of tools used across the company was implemented, enhanced and supported.

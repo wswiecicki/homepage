@@ -7,6 +7,7 @@ import PageBase from '../layouts/PageBase.astro';
         <h1>Wojciech Święcicki</h1>
         <h2>Lead SDET / QAOps</h2>
         <p>Improving quality through automation</p>
+        <a class="cta" href="/projects">See my work&nbsp;→</a>
     </header>
 </PageBase>
 
@@ -18,24 +19,28 @@ import PageBase from '../layouts/PageBase.astro';
         font-style: normal;
         text-shadow: 0 0 8px #b1ada350;
     }
-    p {
-        padding: 1rem 0;
+    header h1,
+    header h2,
+    header p {
+        margin: 0;
+        padding: 0;
+    }
+    header h2 {
+        margin-top: 0.75rem;
+    }
+    header p {
+        margin-top: 1.5rem;
+    }
+    .cta {
+        display: inline-block;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+        font-family: 'Ubuntu Mono', monospace;
+        font-size: 1rem;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+    .cta:hover {
+        text-shadow: 0 0 6px var(--color-text-shadow-hover);
     }
 </style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.querySelector('.nav-links');
-        if (navLinks) {
-            navLinks.classList.add('expanded');
-        }
-        const hamburger = document.querySelector('.hamburger');
-        const menuButton = document.querySelector('.menu-button');
-        if (hamburger) {
-            hamburger.classList.add('attention-pulse');
-        }
-        if (menuButton) {
-            menuButton.classList.add('attention-pulse');
-        }
-    });
-</script>

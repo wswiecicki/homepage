@@ -1,7 +1,11 @@
 ---
 title: 'Playwright in Azure'
-logoSrc: '/logos/projects/pw.png'
-logoAlt: 'Playwright in Azure'
+order: 5
+logos:
+    - src: '/logos/pw.svg'
+      alt: 'Playwright'
+    - src: '/logos/azure.svg'
+      alt: 'Azure'
 ---
 
 Architected, deployed, managed and tested a solution for running Playwright tests in Azure in a scalable manner, using a custom GUI.

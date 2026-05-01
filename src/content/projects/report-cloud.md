@@ -1,7 +1,11 @@
 ---
 title: 'Reporting service'
-logoSrc: 'logos/projects/az.png'
-logoAlt: 'Typescript with Azure'
+order: 12
+logos:
+    - src: '/logos/ts.svg'
+      alt: 'TypeScript'
+    - src: '/logos/azure.svg'
+      alt: 'Azure'
 ---
 
 Designed and deployed an online raport generator with data aggregation.

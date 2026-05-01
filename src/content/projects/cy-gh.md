@@ -1,7 +1,11 @@
 ---
 title: 'Cypress in CI/CD'
-logoSrc: '/logos/projects/cy.png'
-logoAlt: 'cypress with github actions'
+order: 10
+logos:
+    - src: '/logos/cypress.svg'
+      alt: 'Cypress'
+    - src: '/logos/ghactions.svg'
+      alt: 'GitHub Actions'
 ---
 
 Comprehensive CI/CD solutions for multiple complex web platforms were created using Cypress, Vitest, visual testing and Github Actions.

@@ -4,8 +4,15 @@ const projectsCollection = defineCollection({
     type: 'content',
     schema: z.object({
         title: z.string(),
-        logoSrc: z.string().optional(),
-        logoAlt: z.string().optional(),
+        logos: z
+            .array(
+                z.object({
+                    src: z.string(),
+                    alt: z.string().optional(),
+                })
+            )
+            .optional(),
+        order: z.number().optional(),
     }),
 });
 

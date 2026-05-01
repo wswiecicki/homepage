@@ -35,7 +35,7 @@ PBT has strong ties to formal methods and mathematical reasoning. When a propert
 
 Key mathematical and logical concepts that describe this method:
 
-- **Invariants**: properties often describe invariants — conditions that must always be true throughout the execution in the system or for a data structure. For example, a sorting algorithm's property might be that the output list always has the same elements as the input list, just in a different order (a permutation), and that the output list is sorted.
+- **Invariants**: properties often describe invariants - conditions that must always be true throughout the execution in the system or for a data structure. For example, a sorting algorithm's property might be that the output list always has the same elements as the input list, just in a different order (a permutation), and that the output list is sorted.
 
 - **Algebraic properties**: in functional programming, PBT is commonly used to verify algebraic properties of functions, such as associativity, commutativity, or identity laws. For instance, for a function `f` and an identity element `id`, a property might be `f(x, id) == x`.
 

@@ -6,45 +6,79 @@ interface Props {
 }
 
 const { projects } = Astro.props;
+const columns: { project: CollectionEntry<'projects'>; index: number }[][] = [[], []];
+projects.forEach((project, index) => {
+    columns[index % 2].push({ project, index });
+});
 ---
 
 <div class="masonry-layout" aria-label="Projects showcase">
     {
         await Promise.all(
-            projects.map(async (project) => {
-                const { Content } = await project.render();
-                const headerId = `project-header-${project.slug}`;
-                return (
-                    <article class="project-item" aria-labelledby={headerId} data-project-item>
-                        <figure>
-                            {project.data.logoSrc && (
-                                <img src={project.data.logoSrc} alt={project.data.logoAlt || ''} class="project-logo" />
-                            )}
-                            <figcaption>
-                                <h3 id={headerId}>{project.data.title}</h3>
-                                <div class="project-description is-collapsed" data-project-description>
-                                    <Content />
-                                </div>
-                                <div class="expand-prompt" data-expand-prompt>
-                                    <p data-prompt-text>More...</p>
-                                </div>
-                            </figcaption>
-                        </figure>
-                    </article>
-                );
-            })
+            columns.map(async (column) => (
+                <div class="masonry-column">
+                    {await Promise.all(
+                        column.map(async ({ project, index }) => {
+                            const { Content } = await project.render();
+                            const headerId = `project-header-${project.slug}`;
+                            return (
+                                <article
+                                    class="project-item"
+                                    aria-labelledby={headerId}
+                                    data-project-item
+                                    style={`--order: ${index};`}
+                                >
+                                    <figure>
+                                        {project.data.logos && project.data.logos.length > 0 && (
+                                            <div class="project-logos">
+                                                {project.data.logos.map((logo) => (
+                                                    <img
+                                                        src={logo.src}
+                                                        alt={logo.alt || ''}
+                                                        class="project-logo"
+                                                    />
+                                                ))}
+                                            </div>
+                                        )}
+                                        <figcaption>
+                                            <h3 id={headerId}>{project.data.title}</h3>
+                                            <div
+                                                class="project-description is-collapsed"
+                                                data-project-description
+                                            >
+                                                <Content />
+                                            </div>
+                                            <div class="expand-prompt" data-expand-prompt>
+                                                <p data-prompt-text>More...</p>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                            );
+                        })
+                    )}
+                </div>
+            ))
         )
     }
 </div>
 
 <style>
     .masonry-layout {
-        --columns: 2;
         --gap: 1.5rem;
-        column-count: var(--columns);
-        column-gap: var(--gap);
+        display: flex;
+        gap: var(--gap);
         padding: 1rem;
         width: 100%;
+        align-items: flex-start;
+    }
+
+    .masonry-column {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap);
     }
 
     .project-item {
@@ -52,8 +86,6 @@ const { projects } = Astro.props;
         border: 1px solid var(--color-border-item-translucent);
         border-radius: 12px;
         padding: 1.5rem 1.5rem 1rem;
-        margin-bottom: var(--gap);
-        break-inside: avoid-column;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         transition: all 0.2s ease;
         backdrop-filter: blur(4px);
@@ -79,14 +111,28 @@ const { projects } = Astro.props;
         width: 100%;
     }
 
-    .project-logo {
-        max-width: 160px;
-        height: auto;
+    .project-logos {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
         margin-bottom: 1rem;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+
+    .project-logos .project-logo {
+        height: 56px;
+        width: auto;
+        max-width: calc(50% - 0.75rem);
+        margin-bottom: 0;
+        object-fit: contain;
+        flex-shrink: 1;
     }
 
     .project-item h3 {
         font-size: 1.2rem;
+        margin-top: 2rem;
         margin-bottom: 0.5rem;
         color: var(--color-accent);
         text-align: center;
@@ -103,7 +149,7 @@ const { projects } = Astro.props;
     }
 
     .project-description.is-collapsed {
-        max-height: 5em;
+        max-height: 8em;
         mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
         -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
     }
@@ -132,15 +178,20 @@ const { projects } = Astro.props;
 
     @media (max-width: 768px) {
         .masonry-layout {
-            --columns: 1;
+            flex-direction: column;
+        }
+
+        .masonry-column {
+            display: contents;
         }
 
         .project-item {
             padding: 1rem;
+            order: var(--order);
         }
 
-        .project-logo {
-            max-width: 80px;
+        .project-logos .project-logo {
+            height: 44px;
         }
     }
 </style>

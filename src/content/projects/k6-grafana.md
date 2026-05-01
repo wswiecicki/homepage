@@ -1,7 +1,11 @@
 ---
 title: 'Grafana k6'
-logoSrc: '/logos/projects/k6.png'
-logoAlt: 'k6 in Grafana Cloud'
+order: 9
+logos:
+    - src: '/logos/k6.svg'
+      alt: 'k6'
+    - src: '/logos/grafana.svg'
+      alt: 'Grafana'
 ---
 
 Workflows and processes around Grafana k6 Cloud and Grafana k6 were designed and put in place.
