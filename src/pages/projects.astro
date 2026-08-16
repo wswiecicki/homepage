@@ -8,7 +8,10 @@ const allProjects = (await getCollection('projects')).sort(
 );
 ---
 
-<PageBase pageTitle="Projects">
+<PageBase
+    title="Projects"
+    description="Selected engineering work — AI evaluation harnesses, test automation platforms, and quality tooling across cloud, data and web systems."
+>
     <section class="projects-section">
         <h1>My Projects</h1>
         <ProjectMasonry projects={allProjects} />

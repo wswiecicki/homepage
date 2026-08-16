@@ -6,7 +6,10 @@ import githubIcon from '@assets/github-mark.svg';
 const aboutSections = (await getCollection('about')).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 ---
 
-<PageBase pageTitle="Wojciech Święcicki - homepage">
+<PageBase
+    title="About"
+    description="Lead Platform & Test Engineer working on AI validation and AI development — evaluating agentic systems and building them with RAG, fine-tuning and custom agents."
+>
     <section>
         <div class="main-content">
             <header>
@@ -162,8 +165,8 @@ const aboutSections = (await getCollection('about')).sort((a, b) => (a.data.orde
             text-decoration: underline;
         }
         .about-text {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 0;
             padding: 0;
         }
@@ -187,21 +190,46 @@ const aboutSections = (await getCollection('about')).sort((a, b) => (a.data.orde
 
         @media (min-width: 786px) {
             .about-text {
-                flex-direction: row;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .para-block {
-                flex: 1;
                 padding: 1rem;
                 border-left: 1px solid var(--color-border-item);
             }
 
-            .para-block:first-child {
+            .para-block:nth-child(2n + 1) {
                 border-left: none;
+            }
+
+            .para-block:nth-child(-n + 4) {
+                border-bottom: 1px solid var(--color-border-item);
             }
 
             .para-block hr {
                 display: none;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .about-text {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .para-block:nth-child(2n + 1) {
+                border-left: 1px solid var(--color-border-item);
+            }
+
+            .para-block:nth-child(3n + 1) {
+                border-left: none;
+            }
+
+            .para-block:nth-child(-n + 4) {
+                border-bottom: none;
+            }
+
+            .para-block:nth-child(-n + 3) {
+                border-bottom: 1px solid var(--color-border-item);
             }
         }
 

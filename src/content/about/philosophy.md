@@ -1,6 +1,6 @@
 ---
 title: Philosophy
-order: 4
+order: 5
 ---
 
 I'm a strong believer in using cutting-edge, performant, and maintainable solutions - and in continuously evolving engineering practices to support long-term growth and innovation.

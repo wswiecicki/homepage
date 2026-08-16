@@ -2,11 +2,15 @@
 import PageBase from '../layouts/PageBase.astro';
 ---
 
-<PageBase pageTitle="Wojciech Święcicki - homepage">
+<PageBase
+    title="Wojciech Święcicki — AI validation & agentic systems"
+    isHome={true}
+>
     <header>
         <h1>Wojciech Święcicki</h1>
         <h2>Lead Platform & Test Engineer</h2>
-        <a class="cta" href="/projects">See my work&nbsp;→</a>
+        <p class="positioning">Validating and building AI systems — agent evaluation, RAG, fine-tuning.</p>
+        <a class="cta" href="/projects/">See my work&nbsp;→</a>
     </header>
 </PageBase>
 
@@ -29,6 +33,10 @@ import PageBase from '../layouts/PageBase.astro';
     }
     header p {
         margin-top: 1.5rem;
+    }
+    .positioning {
+        font-family: 'Ubuntu Mono', monospace;
+        max-width: 34rem;
     }
     .cta {
         display: inline-block;

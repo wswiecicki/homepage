@@ -3,16 +3,16 @@ import Hamburger from '@components/Hamburger.astro';
 
 const pageOrder = {
     '/': 'Home',
-    '/projects': 'Projects',
-    '/blog': 'Blog',
-    '/about': 'About',
+    '/projects/': 'Projects',
+    '/blog/': 'Blog',
+    '/about/': 'About',
 };
 const orderedKeys = Object.keys(pageOrder);
 const allPageFiles = import.meta.glob('../pages/*.astro');
 
 const allLinks = Object.keys(allPageFiles).map((filePath) => {
     const fileName = filePath.split('/').pop()?.replace('.astro', '');
-    const url = fileName === 'index' ? '/' : `/${fileName}`;
+    const url = fileName === 'index' ? '/' : `/${fileName}/`;
     return url;
 });
 
@@ -29,7 +29,7 @@ const navLinks = [
         .sort()
         .map((url) => ({
             url,
-            name: capitalize(url.replace('/', '')),
+            name: capitalize(url.replace(/\//g, '')),
         })),
 ];
 ---
