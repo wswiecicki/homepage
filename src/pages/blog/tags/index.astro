@@ -1,0 +1,59 @@
+---
+import PageBase from '@layouts/PageBase.astro';
+import { getTags } from '@lib/blog';
+
+const tags = await getTags();
+---
+
+<PageBase
+    title="Tags"
+    description="Browse writing by topic — AI validation, agent evaluation, testing agentic systems and quality engineering."
+    noindex={true}
+>
+    <section class="post-list">
+        <h1>Tags</h1>
+        <p class="back"><a href="/blog/">All posts</a></p>
+        <ul class="tags">
+            {tags.map((info) => (
+                <li>
+                    <a href={`/blog/tags/${info.slug}/`}>{info.tag} <span class="count">{info.count}</span></a>
+                </li>
+            ))}
+        </ul>
+    </section>
+</PageBase>
+
+<style>
+    .post-list {
+        max-width: 1280px;
+        margin: 0 auto 1rem;
+        border: 1px solid var(--color-border-item-translucent);
+        padding: 1rem;
+        border-radius: 0 0 0 16px;
+        border-top: none;
+        backdrop-filter: blur(2px);
+        background-color: var(--color-bg-post-translucent);
+    }
+    h1 { text-align: center; }
+    .back { text-align: center; }
+    .back a { text-decoration: underline; }
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        list-style: none;
+        padding: 1rem;
+        margin: 0;
+        justify-content: center;
+    }
+    .tags a {
+        font-family: 'Ubuntu Mono', monospace;
+        padding: 0.3rem 0.9rem;
+        border: 1px solid var(--color-border-item);
+        border-radius: 999px;
+        text-decoration: none;
+        display: inline-block;
+    }
+    .tags a:hover { background-color: var(--color-bg-hover); }
+    .count { opacity: 0.6; font-size: 0.85em; }
+</style>

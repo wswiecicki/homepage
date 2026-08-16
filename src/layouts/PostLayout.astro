@@ -1,31 +1,48 @@
 ---
 import PageBase from '@layouts/PageBase.astro';
+import { blogPostingSchema } from '@lib/schema';
+import { tagSlug, type Post } from '@lib/blog';
 
-const { frontmatter } = Astro.props;
+interface Props {
+    post: Post;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, author, tags } = post.data;
 ---
 
-<PageBase pageTitle={frontmatter.title}>
-    <h1>Blog post</h1>
+<PageBase
+    title={title}
+    description={description}
+    ogType="article"
+    publishedDate={pubDate}
+    updatedDate={updatedDate}
+    tags={tags}
+    jsonLd={[blogPostingSchema(post)]}
+>
     <article class="post">
         <section class="title">
-            <h2 class="post-title">{frontmatter.title}</h2>
+            <h1 class="post-title">{title}</h1>
             <p class="post-date">
                 Published on: {
-                    frontmatter.pubDate.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
+                    pubDate.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
                 }
             </p>
         </section>
 
         <slot />
-        <p class="author">~ {frontmatter.author}</p>
+        {tags.length > 0 && (
+            <ul class="tags">
+                {tags.map((tag) => (
+                    <li><a href={`/blog/tags/${tagSlug(tag)}/`}>{tag}</a></li>
+                ))}
+            </ul>
+        )}
+        <p class="author">~ {author}</p>
     </article>
 </PageBase>
 
 <style>
-    h1 {
-        text-align: center;
-        padding: 16px;
-    }
     article {
         max-width: 1280px;
         margin: 1rem auto;
@@ -47,6 +64,8 @@ const { frontmatter } = Astro.props;
 
     .post-title {
         flex-grow: 3;
+        font-size: 180%;
+        margin: 1.5rem auto;
     }
     .post-date {
         margin-left: auto;
@@ -87,5 +106,25 @@ const { frontmatter } = Astro.props;
     h5 {
         font-size: 120%;
         margin: 1.5rem auto;
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        list-style: none;
+        padding: 0;
+        margin: 0.5rem 0;
+    }
+    .tags a {
+        font-family: 'Ubuntu Mono', monospace;
+        font-size: 0.85em;
+        padding: 0.15rem 0.6rem;
+        border: 1px solid var(--color-border-item);
+        border-radius: 999px;
+        text-decoration: none;
+    }
+    .tags a:hover {
+        background-color: var(--color-bg-hover);
     }
 </style>

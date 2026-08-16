@@ -1,0 +1,69 @@
+---
+import { SITE } from '@lib/site';
+import { personSchema, webSiteSchema, breadcrumbSchema } from '@lib/schema';
+
+export interface Props {
+    title: string;
+    description?: string;
+    ogType?: 'website' | 'article';
+    publishedDate?: Date;
+    updatedDate?: Date;
+    tags?: string[];
+    image?: string;
+    noindex?: boolean;
+    jsonLd?: unknown[];
+    isHome?: boolean;
+}
+
+const {
+    title,
+    description = SITE.description,
+    ogType = 'website',
+    publishedDate,
+    updatedDate,
+    tags = [],
+    image = SITE.defaultImage,
+    noindex = false,
+    jsonLd = [],
+    isHome = false,
+} = Astro.props;
+
+const origin = Astro.site ?? new URL(SITE.url);
+const canonical = new URL(Astro.url.pathname, origin).href;
+const imageUrl = new URL(image, origin).href;
+const fullTitle = isHome ? title : `${title} · ${SITE.name}`;
+const rssUrl = new URL('/rss.xml', origin).href;
+
+const blocks = [personSchema(), webSiteSchema(), breadcrumbSchema(Astro.url.pathname), ...jsonLd].filter(
+    Boolean
+);
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="author" content={SITE.name} />
+<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+<meta name="theme-color" content="#141414" />
+
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:locale" content="en_GB" />
+{publishedDate && <meta property="article:published_time" content={publishedDate.toISOString()} />}
+{updatedDate && <meta property="article:modified_time" content={updatedDate.toISOString()} />}
+{tags.map((tag) => <meta property="article:tag" content={tag} />)}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+
+<link rel="alternate" type="application/rss+xml" title={`${SITE.name} — Blog`} href={rssUrl} />
+
+{blocks.map((block) => (
+    <script type="application/ld+json" set:html={JSON.stringify(block)} />
+))}

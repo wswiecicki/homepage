@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#141414"/>
+  <rect x="60" y="60" width="1080" height="510" fill="none" stroke="#b1ada3" stroke-opacity="0.25" stroke-width="2" rx="24"/>
+  <text x="110" y="270" font-family="Lato, Helvetica, sans-serif" font-size="82" font-weight="700" fill="#b1ada3">Wojciech Święcicki</text>
+  <text x="110" y="340" font-family="Lato, Helvetica, sans-serif" font-size="34" fill="#b1ada3" fill-opacity="0.75">Lead Platform &amp; Test Engineer</text>
+  <text x="110" y="430" font-family="Ubuntu Mono, monospace" font-size="30" fill="#b1ada3">Validating and building AI systems</text>
+  <text x="110" y="472" font-family="Ubuntu Mono, monospace" font-size="30" fill="#b1ada3" fill-opacity="0.75">agent evaluation · RAG · fine-tuning</text>
+  <text x="110" y="540" font-family="Ubuntu Mono, monospace" font-size="24" fill="#b1ada3" fill-opacity="0.55">www.wswiecicki.pl</text>
+</svg>

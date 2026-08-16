@@ -3,9 +3,6 @@ title: 'An argument for property-based testing'
 pubDate: 2025-05-31
 description: 'Exploring the power of property-based testing with Vitest and fast-check.'
 author: 'Wojciech'
-image:
-    url: 'https://docs.astro.build/assets/full-logo-light.png'
-    alt: 'The full Astro logo.' # TODO
 tags:
     [
         'testing',

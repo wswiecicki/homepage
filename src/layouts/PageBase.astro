@@ -6,9 +6,11 @@ import '@fontsource/ubuntu-mono';
 import '@fontsource/ubuntu-mono/700';
 
 import Navigation from '@components/Navigation.astro';
+import Seo, { type Props as SeoProps } from '@components/Seo.astro';
 import { ClientRouter } from 'astro:transitions';
 
-const { pageTitle } = Astro.props || '';
+export type Props = SeoProps;
+const seo = Astro.props;
 ---
 
 <html lang="en">
@@ -16,7 +18,7 @@ const { pageTitle } = Astro.props || '';
         <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{pageTitle}</title>
+        <Seo {...seo} />
     </head>
     <body>
         <canvas></canvas>
